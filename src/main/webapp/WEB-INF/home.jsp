@@ -6,7 +6,8 @@
 </head>
 <body>
 <% User user = (User) session.getAttribute("user"); %>
-<a style="color: black;text-decoration: none" href="/logout">logout</a> <br>
+<a style="color: black;text-decoration: none" href="/logout">logout</a> |
+<a style="color: black;text-decoration: none" href="/profile">profile</a> <br>
 <div style="display: flex;flex-direction: row;align-items: center;justify-content: center">
     <h3>Welcome</h3>
     <h1 style="margin-left: 10px"><%=user.getName()%> <%=user.getSurname()%>

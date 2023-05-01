@@ -13,7 +13,7 @@
 <a style="color: black;text-decoration: none" href="/">Back</a>
 <div style="display: flex; flex-direction: column;align-items: center">
     <h3>Register</h3>
-    <form action="/register" method="post">
+    <form action="/register" method="post" enctype="multipart/form-data">
         <input style="width: 300px; height: 30px; border-radius: 10px" name="name" type="text"
                placeholder="name"><br/><br/>
         <input style="width: 300px; height: 30px; border-radius: 10px" name="surname" type="text" placeholder="surname"><br/><br/>
@@ -25,6 +25,7 @@
             <option value="ADMIN">ADMIN</option>
             <option value="USER">USER</option>
         </select><br/><br/>
+        <input style="margin-top: 5px" type="file" name="profilePic"><br/><br/>
         <input style="width: 100px; height: 30px; margin-left: 100px; border-radius: 50px" type="submit"
                value="register">
     </form>
