@@ -18,6 +18,7 @@
     <h2>Books</h2>
     <table border="1">
         <tr>
+            <th>image</th>
             <th>id</th>
             <th>title</th>
             <th>description</th>
@@ -29,7 +30,16 @@
         </tr>
         <% if (bookList != null && !bookList.isEmpty()) {%>
         <% for (Book book : bookList) { %>
+        <% if (user.getUserType() == UserType.ADMIN) { %>
         <tr>
+            <td>
+                <% if (book.getPicName() == null || book.getPicName().equalsIgnoreCase("null")) {%>
+                <img src="/img/img.png" width="100">
+                <%} else {%>
+                <a href="/getBookImage?picName=<%=book.getPicName()%>"><img
+                        src="/getBookImage?picName=<%=book.getPicName()%>" width="100"></a>
+                <%}%>
+            </td>
             <td><%=book.getId()%>
             </td>
             <td><%=book.getTitle()%>
@@ -40,14 +50,39 @@
             </td>
             <td><%=book.getAuthor().getName()%> <%=book.getAuthor().getSurname()%>
             </td>
-            <% if (user.getUserType() == UserType.ADMIN) { %>
             <td><a style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
                    style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
                    href="/removeBook?id=<%=book.getId()%>">Delete</a>
                 / <a style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
                      href="/updateBook?id=<%=book.getId()%>">Update</a></td>
-            <%}%>
         </tr>
+        <%}else if (book.getUserId() == user.getId()){%>
+        <tr>
+            <td>
+                <% if (book.getPicName() == null || book.getPicName().equalsIgnoreCase("null")) {%>
+                <img src="/img/img.png" width="100">
+                <%} else {%>
+                <a href="/getBookImage?picName=<%=book.getPicName()%>"><img
+                        src="/getBookImage?picName=<%=book.getPicName()%>" width="100"></a>
+                <%}%>
+            </td>
+            <td><%=book.getId()%>
+            </td>
+            <td><%=book.getTitle()%>
+            </td>
+            <td><%=book.getDescription()%>
+            </td>
+            <td><%=book.getPrice()%>
+            </td>
+            <td><%=book.getAuthor().getName()%> <%=book.getAuthor().getSurname()%>
+            </td>
+            <td><a style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
+                   style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
+                   href="/removeBook?id=<%=book.getId()%>">Delete</a>
+                / <a style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
+                     href="/updateBook?id=<%=book.getId()%>">Update</a></td>
+        </tr>
+        <%}%>
         <%}%>
         <%}%>
     </table>

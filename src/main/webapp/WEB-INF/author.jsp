@@ -17,6 +17,7 @@
     <h2>Authors</h2>
     <table>
         <tr>
+            <th>image</th>
             <th>id</th>
             <th>name</th>
             <th>surname</th>
@@ -29,6 +30,14 @@
         <% if (authorsList != null && !authorsList.isEmpty()) {%>
         <% for (Author author : authorsList) { %>
         <tr>
+            <td>
+                <% if (author.getPicName() == null || author.getPicName().equalsIgnoreCase("null")) {%>
+                <img src="/img/img.png" width="100">
+                <%} else {%>
+                <a href="/getAuthorImage?picName=<%=author.getPicName()%>"><img
+                        src="/getAuthorImage?picName=<%=author.getPicName()%>" width="100"></a>
+                <%}%>
+            </td>
             <td><%=author.getId()%>
             </td>
             <td><%=author.getName()%>

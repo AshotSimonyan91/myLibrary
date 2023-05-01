@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/removeAuthor", "/removeBook", "/updateAuthor", "/updateBook"})
+@WebFilter(urlPatterns = {"/removeAuthor", "/updateAuthor","/createAuthor"})
 public class AdminFilter implements Filter {
 
     @Override

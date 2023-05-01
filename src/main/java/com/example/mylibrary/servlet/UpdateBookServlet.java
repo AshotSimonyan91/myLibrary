@@ -1,19 +1,28 @@
 package com.example.mylibrary.servlet;
 
+import com.example.mylibrary.constants.SheredConstant;
 import com.example.mylibrary.manager.AuthorManager;
 import com.example.mylibrary.manager.BookManager;
 import com.example.mylibrary.model.Author;
 import com.example.mylibrary.model.Book;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/updateBook")
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 10,
+        fileSizeThreshold = 1024 * 1024 * 1
+)
 public class UpdateBookServlet extends HttpServlet {
 
     private BookManager bookManager = new BookManager();
@@ -31,13 +40,32 @@ public class UpdateBookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Book book = bookManager.getById(id);
+        if (book != null) {
+            if (book.getPicName() != null) {
+                File file = new File(SheredConstant.BOOK_UPLOAD_FOLDER + book.getPicName());
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        }
+
+        Part profilePicPath = req.getPart("updateProfilePic");
+        String picName = null;
+        if (profilePicPath != null && profilePicPath.getSize() > 0) {
+            picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
+            profilePicPath.write(SheredConstant.BOOK_UPLOAD_FOLDER + picName);
+        }
         bookManager.update(Book.builder()
-                .id(Integer.parseInt(req.getParameter("id")))
+                .id(id)
                 .title(req.getParameter("title"))
                 .description(req.getParameter("description"))
                 .price(Double.parseDouble(req.getParameter("price")))
                 .author(authorManager.getById(Integer.parseInt(req.getParameter("authorId"))))
+                .picName(picName)
+                .userId(Integer.parseInt(req.getParameter("userId")))
                 .build());
-        resp.sendRedirect("/books");
+        resp.sendRedirect("/books?name=");
     }
 }

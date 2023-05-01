@@ -13,13 +13,14 @@ public class AuthorManager {
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
 
     public void save(Author author) {
-        String sql = "INSERT INTO author(name,surname,email,age) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO author(name,surname,email,age,pic_name) VALUES(?,?,?,?,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, author.getName());
             ps.setString(2, author.getSurname());
             ps.setString(3, author.getEmail());
             ps.setDate(4, author.getAge());
+            ps.setString(5,author.getPicName());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -71,13 +72,14 @@ public class AuthorManager {
 
 
     public void update(Author author) {
-        String sql = "UPDATE author SET name = ?, surname = ?, email = ?, age = ?  WHERE id = ?";
+        String sql = "UPDATE author SET name = ?, surname = ?, email = ?, age = ?, pic_name = ?  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, author.getName());
             preparedStatement.setString(2, author.getSurname());
             preparedStatement.setString(3, author.getEmail());
             preparedStatement.setDate(4, author.getAge());
-            preparedStatement.setInt(5, author.getId());
+            preparedStatement.setString(5,author.getPicName());
+            preparedStatement.setInt(6, author.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -91,6 +93,7 @@ public class AuthorManager {
                 .name(resultSet.getString("name"))
                 .surname(resultSet.getString("surname"))
                 .email(resultSet.getString("email"))
+                .picName(resultSet.getString("pic_name"))
                 .age(resultSet.getDate("age"))
                 .build();
     }

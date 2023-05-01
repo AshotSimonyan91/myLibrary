@@ -1,19 +1,27 @@
 package com.example.mylibrary.servlet;
 
+import com.example.mylibrary.constants.SheredConstant;
 import com.example.mylibrary.manager.AuthorManager;
 import com.example.mylibrary.manager.BookManager;
 import com.example.mylibrary.model.Author;
 import com.example.mylibrary.model.Book;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/createBook")
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 10,
+        fileSizeThreshold = 1024 * 1024 * 1
+)
 public class CreatBookServlet extends HttpServlet {
 
     private BookManager bookManager = new BookManager();
@@ -28,12 +36,20 @@ public class CreatBookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Part profilePicPath = req.getPart("profilePic");
+        String picName = null;
+        if (profilePicPath != null && profilePicPath.getSize() > 0) {
+            picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
+            profilePicPath.write(SheredConstant.BOOK_UPLOAD_FOLDER + picName);
+        }
         bookManager.save(Book.builder()
                 .title(req.getParameter("title"))
                 .description(req.getParameter("description"))
                 .price(Double.parseDouble(req.getParameter("price")))
                 .author(authorManager.getById(Integer.parseInt(req.getParameter("authorId"))))
+                .picName(picName)
+                .userId(Integer.parseInt(req.getParameter("userId")))
                 .build());
-        resp.sendRedirect("/books");
+        resp.sendRedirect("/books?name=");
     }
 }

@@ -11,7 +11,7 @@
 <div style="display: flex;flex-direction: column;align-items: center;justify-content: center">
     <h2>Create Author</h2>
 
-    <form action="/createAuthor" method="post">
+    <form action="/createAuthor" method="post" enctype="multipart/form-data">
         <input style="width: 300px; height: 30px; border-radius: 10px;margin-top: 5px" type="text" name="name"
                placeholder="name"><br>
         <input style="width: 300px; height: 30px; border-radius: 10px;margin-top: 5px" type="text" name="surname"
@@ -20,6 +20,7 @@
                placeholder="email"><br>
         <input style="width: 300px; height: 30px; border-radius: 10px;margin-top: 5px" type="date" name="age"
                placeholder="age"><br>
+        <input style="margin-top: 5px" type="file" name="profilePic"><br>
 
         <input style="width: 100px; height: 30px; margin-left: 100px; border-radius: 50px;margin-top: 10px"
                type="submit" value="Add">

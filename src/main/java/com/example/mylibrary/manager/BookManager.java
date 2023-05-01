@@ -14,13 +14,15 @@ public class BookManager {
     private AuthorManager authorManager = new AuthorManager();
 
     public void save(Book book) {
-        String sql = "INSERT INTO book(title,description,price,author_id) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO book(title,description,price,author_id,pic_name,user_id) VALUES(?,?,?,?,?,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getDescription());
             ps.setDouble(3, book.getPrice());
             ps.setInt(4, book.getAuthor().getId());
+            ps.setString(5, book.getPicName());
+            ps.setInt(6,book.getUserId());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -87,13 +89,14 @@ public class BookManager {
 
 
     public void update(Book book) {
-        String sql = "UPDATE book SET title = ?, description = ?, price = ?, author_id = ?  WHERE id = ?";
+        String sql = "UPDATE book SET title = ?, description = ?, price = ?, author_id = ?,pic_name = ?  WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setString(2, book.getDescription());
             preparedStatement.setDouble(3, book.getPrice());
             preparedStatement.setInt(4, book.getAuthor().getId());
-            preparedStatement.setInt(5, book.getId());
+            preparedStatement.setString(5,book.getPicName());
+            preparedStatement.setInt(6, book.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,6 +111,8 @@ public class BookManager {
                 .description(resultSet.getString("description"))
                 .price(resultSet.getDouble("price"))
                 .author(authorManager.getById(resultSet.getInt("author_id")))
+                .picName(resultSet.getString("pic_name"))
+                .userId(resultSet.getInt("user_id"))
                 .build();
     }
 }
