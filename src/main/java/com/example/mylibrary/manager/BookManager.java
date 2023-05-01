@@ -12,6 +12,7 @@ public class BookManager {
 
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
     private AuthorManager authorManager = new AuthorManager();
+    private UserManager userManager = new UserManager();
 
     public void save(Book book) {
         String sql = "INSERT INTO book(title,description,price,author_id,pic_name,user_id) VALUES(?,?,?,?,?,?)";
@@ -22,7 +23,7 @@ public class BookManager {
             ps.setDouble(3, book.getPrice());
             ps.setInt(4, book.getAuthor().getId());
             ps.setString(5, book.getPicName());
-            ps.setInt(6,book.getUserId());
+            ps.setInt(6,book.getUser().getId());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -66,7 +67,7 @@ public class BookManager {
         List<Book> bookList = new ArrayList<>();
         String sql = "Select * from book WHERE title Like ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, name + "%");
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 bookList.add(getBookFromResultSet(resultSet));
@@ -112,7 +113,7 @@ public class BookManager {
                 .price(resultSet.getDouble("price"))
                 .author(authorManager.getById(resultSet.getInt("author_id")))
                 .picName(resultSet.getString("pic_name"))
-                .userId(resultSet.getInt("user_id"))
+                .user(userManager.getById(resultSet.getInt("user_id")))
                 .build();
     }
 }

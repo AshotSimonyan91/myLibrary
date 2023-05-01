@@ -56,7 +56,7 @@
                 / <a style="color: black;margin-left: 5px;margin-right: 5px;font-size: 20px;text-decoration: none"
                      href="/updateBook?id=<%=book.getId()%>">Update</a></td>
         </tr>
-        <%}else if (book.getUserId() == user.getId()){%>
+        <%}else if (book.getUser().getId() == user.getId()){%>
         <tr>
             <td>
                 <% if (book.getPicName() == null || book.getPicName().equalsIgnoreCase("null")) {%>

@@ -3,6 +3,7 @@ package com.example.mylibrary.servlet;
 import com.example.mylibrary.constants.SheredConstant;
 import com.example.mylibrary.manager.AuthorManager;
 import com.example.mylibrary.manager.BookManager;
+import com.example.mylibrary.manager.UserManager;
 import com.example.mylibrary.model.Author;
 import com.example.mylibrary.model.Book;
 import jakarta.servlet.ServletException;
@@ -27,6 +28,7 @@ public class UpdateBookServlet extends HttpServlet {
 
     private BookManager bookManager = new BookManager();
     private AuthorManager authorManager = new AuthorManager();
+    private UserManager userManager = new UserManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,7 +66,7 @@ public class UpdateBookServlet extends HttpServlet {
                 .price(Double.parseDouble(req.getParameter("price")))
                 .author(authorManager.getById(Integer.parseInt(req.getParameter("authorId"))))
                 .picName(picName)
-                .userId(Integer.parseInt(req.getParameter("userId")))
+                .user(userManager.getById(Integer.parseInt(req.getParameter("userId"))))
                 .build());
         resp.sendRedirect("/books?name=");
     }

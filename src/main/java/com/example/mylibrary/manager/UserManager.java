@@ -67,6 +67,20 @@ public class UserManager {
         return userList;
     }
 
+    public User getById(int id) {
+        String sql = "Select * from user where id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return getUserFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public User getByEmailAndPassword(String email, String password) {
         String sql = "Select * from user where email = ? AND password = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
