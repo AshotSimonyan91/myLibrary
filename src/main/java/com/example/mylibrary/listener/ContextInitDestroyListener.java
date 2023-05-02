@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 @WebListener
-public class MyLibraryApplicationListener implements ServletContextListener {
+public class ContextInitDestroyListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

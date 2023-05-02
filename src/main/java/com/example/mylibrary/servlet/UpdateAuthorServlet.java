@@ -39,7 +39,7 @@ public class UpdateAuthorServlet extends HttpServlet {
         Author author = authorManager.getById(id);
         if (author != null) {
             if (author.getPicName() != null) {
-                File file = new File(SheredConstant.AUTHOR_UPLOAD_FOLDER + author.getPicName());
+                File file = new File(AuthorManager.AUTHOR_UPLOAD_FOLDER + author.getPicName());
                 if (file.exists()) {
                     file.delete();
                 }
@@ -50,7 +50,7 @@ public class UpdateAuthorServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.AUTHOR_UPLOAD_FOLDER + picName);
+            profilePicPath.write(AuthorManager.AUTHOR_UPLOAD_FOLDER + picName);
         }
         authorManager.update(Author.builder()
                 .id(id)

@@ -42,7 +42,7 @@ public class UpdateUserServlet extends HttpServlet {
         User user = userManager.getByEmail(email);
         if (user != null) {
             if (user.getPicName() != null) {
-                File file = new File(SheredConstant.USER_UPLOAD_FOLDER + user.getPicName());
+                File file = new File(UserManager.USER_UPLOAD_FOLDER + user.getPicName());
                 if (file.exists()) {
                     file.delete();
                 }
@@ -53,7 +53,7 @@ public class UpdateUserServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.USER_UPLOAD_FOLDER + picName);
+            profilePicPath.write(UserManager.USER_UPLOAD_FOLDER + picName);
         }
         userManager.update(User.builder()
                 .id(Integer.parseInt(req.getParameter("id")))

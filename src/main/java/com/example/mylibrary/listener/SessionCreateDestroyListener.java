@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpSessionListener;
 import java.util.Date;
 
 @WebListener
-public class MyLibrarySessionListener implements HttpSessionListener {
+public class SessionCreateDestroyListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         String id = se.getSession().getId();

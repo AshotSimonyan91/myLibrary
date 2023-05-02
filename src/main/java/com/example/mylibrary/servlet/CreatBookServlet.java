@@ -42,7 +42,7 @@ public class CreatBookServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.BOOK_UPLOAD_FOLDER + picName);
+            profilePicPath.write(BookManager.BOOK_UPLOAD_FOLDER + picName);
         }
         bookManager.save(Book.builder()
                 .title(req.getParameter("title"))

@@ -46,7 +46,7 @@ public class UpdateBookServlet extends HttpServlet {
         Book book = bookManager.getById(id);
         if (book != null) {
             if (book.getPicName() != null) {
-                File file = new File(SheredConstant.BOOK_UPLOAD_FOLDER + book.getPicName());
+                File file = new File(BookManager.BOOK_UPLOAD_FOLDER + book.getPicName());
                 if (file.exists()) {
                     file.delete();
                 }
@@ -57,7 +57,7 @@ public class UpdateBookServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.BOOK_UPLOAD_FOLDER + picName);
+            profilePicPath.write(BookManager.BOOK_UPLOAD_FOLDER + picName);
         }
         bookManager.update(Book.builder()
                 .id(id)

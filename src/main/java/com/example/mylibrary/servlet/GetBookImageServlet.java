@@ -1,6 +1,7 @@
 package com.example.mylibrary.servlet;
 
 import com.example.mylibrary.constants.SheredConstant;
+import com.example.mylibrary.manager.BookManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ public class GetBookImageServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String picName = req.getParameter("picName");
-        File imageFile = new File(SheredConstant.BOOK_UPLOAD_FOLDER + picName);
+        File imageFile = new File(BookManager.BOOK_UPLOAD_FOLDER + picName);
         if (imageFile.exists()) {
             try (FileInputStream inputStream = new FileInputStream(imageFile);
                  OutputStream outputStream = resp.getOutputStream()) {

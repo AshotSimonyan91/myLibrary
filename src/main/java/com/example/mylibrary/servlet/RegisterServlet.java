@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.USER_UPLOAD_FOLDER + picName);
+            profilePicPath.write(UserManager.USER_UPLOAD_FOLDER + picName);
         }
         String email = req.getParameter("email");
         User user = userManager.getByEmail(email);

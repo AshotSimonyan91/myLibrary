@@ -13,6 +13,7 @@ public class BookManager {
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
     private AuthorManager authorManager = new AuthorManager();
     private UserManager userManager = new UserManager();
+    public static final String BOOK_UPLOAD_FOLDER = "/Users/ashotsimonyan/IdeaProjects/myLibrary/image/book/";
 
     public void save(Book book) {
         String sql = "INSERT INTO book(title,description,price,author_id,pic_name,user_id) VALUES(?,?,?,?,?,?)";
@@ -23,7 +24,7 @@ public class BookManager {
             ps.setDouble(3, book.getPrice());
             ps.setInt(4, book.getAuthor().getId());
             ps.setString(5, book.getPicName());
-            ps.setInt(6,book.getUser().getId());
+            ps.setInt(6, book.getUser().getId());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -96,7 +97,7 @@ public class BookManager {
             preparedStatement.setString(2, book.getDescription());
             preparedStatement.setDouble(3, book.getPrice());
             preparedStatement.setInt(4, book.getAuthor().getId());
-            preparedStatement.setString(5,book.getPicName());
+            preparedStatement.setString(5, book.getPicName());
             preparedStatement.setInt(6, book.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

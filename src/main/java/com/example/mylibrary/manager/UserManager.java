@@ -15,6 +15,8 @@ public class UserManager {
 
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
 
+    public static final String USER_UPLOAD_FOLDER = "/Users/ashotsimonyan/IdeaProjects/myLibrary/image/user/";
+
     public void save(User user) {
         String sql = "INSERT INTO user(name,surname,email,password,type,pic_name) VALUES(?,?,?,?,?,?)";
 

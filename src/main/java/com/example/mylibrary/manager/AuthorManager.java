@@ -11,6 +11,7 @@ public class AuthorManager {
 
 
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
+    public static final String AUTHOR_UPLOAD_FOLDER = "/Users/ashotsimonyan/IdeaProjects/myLibrary/image/author/";
 
     public void save(Author author) {
         String sql = "INSERT INTO author(name,surname,email,age,pic_name) VALUES(?,?,?,?,?)";

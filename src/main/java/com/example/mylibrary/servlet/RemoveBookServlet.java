@@ -23,7 +23,7 @@ public class RemoveBookServlet extends HttpServlet {
         Book book = bookManager.getById(id);
         if (book != null) {
             if (book.getPicName() != null) {
-                File file = new File(SheredConstant.BOOK_UPLOAD_FOLDER + book.getPicName());
+                File file = new File(BookManager.BOOK_UPLOAD_FOLDER + book.getPicName());
                 if (file.exists()) {
                     file.delete();
                 }

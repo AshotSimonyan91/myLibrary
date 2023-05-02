@@ -35,7 +35,7 @@ public class CreatAuthorServlet extends HttpServlet {
         String picName = null;
         if (profilePicPath != null && profilePicPath.getSize() > 0) {
             picName = System.nanoTime() + "_" + profilePicPath.getSubmittedFileName();
-            profilePicPath.write(SheredConstant.AUTHOR_UPLOAD_FOLDER + picName);
+            profilePicPath.write(AuthorManager.AUTHOR_UPLOAD_FOLDER + picName);
         }
         authorManager.save(Author.builder()
                 .name(req.getParameter("name"))
